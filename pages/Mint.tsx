@@ -98,6 +98,10 @@ const Mint: React.FC = () => {
           file,
           name: title,
           description,
+          location,
+          urgency,
+          aiConfidence: aiConfidence || undefined,
+          aiAssessment: aiSuggestion || undefined,
         },
         (progress) => {
           setMintProgress(progress);

@@ -12,6 +12,10 @@ export interface MintNFTParams {
   file: File;
   name: string;
   description: string;
+  location?: string;
+  urgency?: 'Low' | 'Medium' | 'High';
+  aiConfidence?: number;
+  aiAssessment?: string;
   attributes?: Array<{
     trait_type: string;
     value: string;
@@ -46,7 +50,7 @@ export async function mintNFT(
   params: MintNFTParams,
   onProgress?: ProgressCallback
 ): Promise<MintSuccess> {
-  const { file, name, description, attributes } = params;
+  const { file, name, description, location, urgency, aiConfidence, aiAssessment, attributes } = params;
 
   // Validate inputs
   if (!file) {
@@ -121,6 +125,10 @@ export async function mintNFT(
       ownerWallet: walletAddress,
       name,
       description: description || null,
+      location: location || null,
+      urgency: urgency || 'Medium',
+      aiConfidence: aiConfidence || null,
+      aiAssessment: aiAssessment || null,
       imageUrl: imageUrl, // Store gateway URL for compatibility
       metadataUri,
       mintTxHash: mintResult.transactionHash,

@@ -50,6 +50,10 @@ export async function saveMintedNFT(nftData: {
   ownerWallet: string;
   name: string;
   description?: string;
+  location?: string;
+  urgency?: string;
+  aiConfidence?: number;
+  aiAssessment?: string;
   imageUrl?: string;
   metadataUri?: string;
   mintTxHash: string;
@@ -71,8 +75,8 @@ export async function saveMintedNFT(nftData: {
     return existing;
   }
 
-  // Insert NFT
-  const nftInsert: NFTInsert = {
+  // Insert NFT (using nfts view which maps to issues table)
+  const nftInsert: any = {
     token_id: nftData.tokenId,
     contract_address: nftData.contractAddress.toLowerCase(),
     chain_id: nftData.chainId,
@@ -85,9 +89,28 @@ export async function saveMintedNFT(nftData: {
     minted_at: nftData.mintedAt.toISOString(),
   };
 
+  // Try to insert into issues table directly (since nfts is a view)
+  const issueInsert: any = {
+    evidence_id: nftData.tokenId,
+    contract_address: nftData.contractAddress.toLowerCase(),
+    chain_id: nftData.chainId,
+    submitted_by: ownerWallet,
+    title: nftData.name,
+    description: nftData.description || null,
+    location: nftData.location || null,
+    urgency: nftData.urgency || 'Medium',
+    ai_confidence: nftData.aiConfidence || null,
+    ai_severity_assessment: nftData.aiAssessment || null,
+    image_url: nftData.imageUrl || null,
+    metadata_uri: nftData.metadataUri || null,
+    mint_tx_hash: nftData.mintTxHash,
+    submitted_at: nftData.mintedAt.toISOString(),
+    status: 'Open',
+  };
+
   const { data: nft, error: nftError } = await supabase
-    .from('nfts')
-    .insert(nftInsert)
+    .from('issues')
+    .insert(issueInsert)
     .select()
     .single();
 
