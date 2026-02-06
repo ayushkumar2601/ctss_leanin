@@ -1,0 +1,75 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VOXRT | Mint Culture</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,700;0,900;1,900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        @keyframes glitch {
+            0% { clip-path: inset(40% 0 61% 0); transform: translate(-2px, 2px); }
+            20% { clip-path: inset(92% 0 1% 0); transform: translate(1px, -3px); }
+            40% { clip-path: inset(43% 0 1% 0); transform: translate(-1px, 2px); }
+            60% { clip-path: inset(25% 0 58% 0); transform: translate(3px, 1px); }
+            80% { clip-path: inset(54% 0 7% 0); transform: translate(-2px, -3px); }
+            100% { clip-path: inset(58% 0 43% 0); transform: translate(1px, 2px); }
+        }
+        .animate-glitch {
+            animation: glitch 1s infinite linear alternate-reverse;
+        }
+        .noise-bg {
+            background-image: url('https://grainy-gradients.vercel.app/noise.svg');
+            opacity: 0.05;
+            pointer-events: none;
+        }
+        body {
+            background-color: #050505;
+            color: #ffffff;
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+        }
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #ff00ff;
+            border-radius: 10px;
+        }
+        .neon-border {
+            border: 1px solid rgba(255, 0, 255, 0.3);
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.1);
+        }
+        .neon-border:hover {
+            border-color: rgba(255, 0, 255, 0.8);
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.3);
+        }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react-router-dom": "https://esm.sh/react-router-dom@^7.13.0",
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "react": "https://esm.sh/react@^19.2.4",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "recharts": "https://esm.sh/recharts@^3.7.0",
+    "@google/genai": "https://esm.sh/@google/genai@^1.38.0",
+    "lucide-react": "https://esm.sh/lucide-react@^0.563.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body class="custom-scrollbar">
+    <div id="root"></div>
+    <div class="fixed inset-0 noise-bg z-[9999]"></div>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+{
+  "network": "sepolia",
+  "marketplaceAddress": "0x187c783Ac49D255Fa5C0b232efD7b5459E544dd5",
+  "deployer": "0x7f15A7C0801f4C19e74966B5D018f34b10AdC8Ee",
+  "platformFee": "250",
+  "deployedAt": "2026-01-31T09:17:17.502Z",
+  "blockNumber": 10161376
+}

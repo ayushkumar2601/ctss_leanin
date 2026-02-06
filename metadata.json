@@ -1,0 +1,7 @@
+{
+  "name": "NEON CHAOS - NFT Underground",
+  "description": "A high-octane, Gen-Z focused NFT marketplace with cyberpunk aesthetics, AI pricing, and glitch-art vibes.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
