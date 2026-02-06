@@ -1,20 +1,18 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ExternalLink, Calendar, Hash, Network } from 'lucide-react';
+import { ExternalLink, Calendar, Hash, Network, AlertTriangle } from 'lucide-react';
 import type { NFTWithAttributes } from '../lib/supabase/types';
 import TimeDisplay from './TimeDisplay';
 
-interface NFTCardProps {
+interface IssueCardProps {
   nft: NFTWithAttributes;
 }
 
-const NFTCard: React.FC<NFTCardProps> = ({ nft }) => {
+const IssueCard: React.FC<IssueCardProps> = ({ nft }) => {
   const [imageError, setImageError] = useState(false);
   const [showMetadata, setShowMetadata] = useState(false);
   const [gatewayIndex, setGatewayIndex] = useState(0);
   const [imageLoading, setImageLoading] = useState(true);
-
-
 
   const getNetworkName = (chainId: number) => {
     return chainId === 11155111 ? 'Sepolia' : `Chain ${chainId}`;
@@ -24,7 +22,25 @@ const NFTCard: React.FC<NFTCardProps> = ({ nft }) => {
     return `https://sepolia.etherscan.io/tx/${txHash}`;
   };
 
-  const placeholderImage = 'https://via.placeholder.com/400x400/1a1a1a/ec4899?text=NFT';
+  // Map token_id to severity (mock logic - in production this would come from metadata)
+  const getSeverity = (): 'Low' | 'Medium' | 'High' => {
+    const id = parseInt(nft.token_id);
+    if (id % 3 === 0) return 'High';
+    if (id % 3 === 1) return 'Medium';
+    return 'Low';
+  };
+
+  const severity = getSeverity();
+  const severityColors = {
+    Low: 'text-yellow-500 border-yellow-500 bg-yellow-500/10',
+    Medium: 'text-orange-500 border-orange-500 bg-orange-500/10',
+    High: 'text-red-500 border-red-500 bg-red-500/10',
+  };
+
+  // Mock status (in production this would come from metadata)
+  const status = nft.attributes?.find(a => a.trait_type === 'Status')?.value || 'Open';
+
+  const placeholderImage = 'https://via.placeholder.com/400x400/1a1a1a/06b6d4?text=Evidence';
   
   // Multiple IPFS gateways for fallback (CORS-friendly gateways first)
   const gateways = [
@@ -60,9 +76,9 @@ const NFTCard: React.FC<NFTCardProps> = ({ nft }) => {
   
   const imageUrl = getImageUrl();
   
-  console.log('🖼️ NFT Card Image:', {
+  console.log('🖼️ Issue Card Image:', {
     name: nft.name,
-    tokenId: nft.token_id,
+    evidenceId: nft.token_id,
     stored: nft.image_url,
     display: imageUrl,
     gateway: gatewayIndex,
@@ -90,15 +106,15 @@ const NFTCard: React.FC<NFTCardProps> = ({ nft }) => {
   };
 
   return (
-    <div className="group relative bg-zinc-900 border border-zinc-800 hover:border-pink-500 transition-all duration-300 overflow-hidden">
-      {/* Clickable area for NFT detail */}
+    <div className="group relative bg-zinc-900 border border-zinc-800 hover:border-cyan-500 transition-all duration-300 overflow-hidden">
+      {/* Clickable area for issue detail */}
       <Link to={`/nft/${nft.id}`} className="block cursor-pointer">
         {/* Image */}
         <div className="relative aspect-square overflow-hidden bg-zinc-950">
         {/* Loading Spinner */}
         {imageLoading && !imageError && (
           <div className="absolute inset-0 flex items-center justify-center bg-zinc-950">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-pink-500"></div>
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-cyan-500"></div>
           </div>
         )}
         
@@ -110,12 +126,22 @@ const NFTCard: React.FC<NFTCardProps> = ({ nft }) => {
           className={`w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 ${imageLoading ? 'opacity-0' : 'opacity-100'}`}
         />
         
-        {/* Network Badge */}
-        <div className="absolute top-3 right-3 bg-black/80 backdrop-blur-sm px-3 py-1 rounded-full border border-pink-500/50">
+        {/* Severity Badge */}
+        <div className={`absolute top-3 right-3 backdrop-blur-sm px-3 py-1 rounded-full border ${severityColors[severity]}`}>
           <div className="flex items-center gap-1.5">
-            <Network size={12} className="text-pink-500" />
-            <span className="text-[10px] font-mono text-pink-500 uppercase">
-              {getNetworkName(nft.chain_id)}
+            <AlertTriangle size={12} />
+            <span className="text-[10px] font-mono font-bold uppercase">
+              {severity}
+            </span>
+          </div>
+        </div>
+
+        {/* Status Badge */}
+        <div className="absolute top-3 left-3 bg-black/80 backdrop-blur-sm px-3 py-1 rounded-full border border-cyan-500/50">
+          <div className="flex items-center gap-1.5">
+            <span className={`w-2 h-2 rounded-full ${status === 'Resolved' ? 'bg-emerald-500' : status === 'Under Review' ? 'bg-yellow-500' : 'bg-cyan-500'}`}></span>
+            <span className="text-[10px] font-mono text-cyan-500 uppercase">
+              {status}
             </span>
           </div>
         </div>
@@ -127,7 +153,7 @@ const NFTCard: React.FC<NFTCardProps> = ({ nft }) => {
       {/* Content */}
       <div className="p-4 space-y-3">
         {/* Name */}
-        <h3 className="text-lg font-black text-white truncate group-hover:text-pink-500 transition-colors">
+        <h3 className="text-lg font-black text-white truncate group-hover:text-cyan-500 transition-colors">
           {nft.name}
         </h3>
 
@@ -140,17 +166,17 @@ const NFTCard: React.FC<NFTCardProps> = ({ nft }) => {
 
         {/* Metadata */}
         <div className="space-y-2">
-          {/* Token ID */}
+          {/* Evidence ID */}
           <div className="flex items-center gap-2 text-xs">
             <Hash size={14} className="text-zinc-500" />
-            <span className="font-mono text-zinc-400">Token ID:</span>
+            <span className="font-mono text-zinc-400">Evidence ID:</span>
             <span className="font-mono text-white">{nft.token_id}</span>
           </div>
 
-          {/* Mint Date */}
+          {/* Reported Date */}
           <div className="flex items-center gap-2 text-xs">
             <Calendar size={14} className="text-zinc-500" />
-            <span className="font-mono text-zinc-400">Minted:</span>
+            <span className="font-mono text-zinc-400">Reported:</span>
             <TimeDisplay date={nft.minted_at} className="font-mono text-white" />
           </div>
         </div>
@@ -164,9 +190,9 @@ const NFTCard: React.FC<NFTCardProps> = ({ nft }) => {
           <div className="pt-3 border-t border-zinc-800 mb-3">
             <button
               onClick={() => setShowMetadata(!showMetadata)}
-              className="text-xs font-mono text-pink-500 hover:text-pink-400 transition-colors"
+              className="text-xs font-mono text-cyan-500 hover:text-cyan-400 transition-colors"
             >
-              {showMetadata ? 'HIDE' : 'SHOW'} ATTRIBUTES ({nft.attributes.length})
+              {showMetadata ? 'HIDE' : 'SHOW'} DETAILS ({nft.attributes.length})
             </button>
 
             {showMetadata && (
@@ -195,7 +221,7 @@ const NFTCard: React.FC<NFTCardProps> = ({ nft }) => {
             href={getExplorerUrl(nft.mint_tx_hash)}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex-1 flex items-center justify-center gap-2 bg-zinc-800 hover:bg-pink-500 text-white py-2 px-3 text-xs font-bold uppercase transition-colors"
+            className="flex-1 flex items-center justify-center gap-2 bg-zinc-800 hover:bg-cyan-500 text-white py-2 px-3 text-xs font-bold uppercase transition-colors"
           >
             <ExternalLink size={14} />
             <span>VIEW TX</span>
@@ -210,7 +236,7 @@ const NFTCard: React.FC<NFTCardProps> = ({ nft }) => {
               }
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 bg-zinc-800 hover:bg-violet-500 text-white py-2 px-3 text-xs font-bold uppercase transition-colors"
+              className="flex items-center justify-center gap-2 bg-zinc-800 hover:bg-teal-500 text-white py-2 px-3 text-xs font-bold uppercase transition-colors"
             >
               <ExternalLink size={14} />
             </a>
@@ -221,4 +247,4 @@ const NFTCard: React.FC<NFTCardProps> = ({ nft }) => {
   );
 };
 
-export default NFTCard;
+export default IssueCard;

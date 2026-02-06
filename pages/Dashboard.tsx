@@ -1,7 +1,7 @@
 import React from 'react';
 import { useWallet } from '../contexts/WalletContext';
 import { useUserNFTs } from '../hooks/useUserNFTs';
-import NFTCard from '../components/NFTCard';
+import IssueCard from '../components/NFTCard';
 import EmptyState from '../components/EmptyState';
 import WalletAddress from '../components/WalletAddress';
 import { Wallet, RefreshCw, AlertCircle, Sparkles } from 'lucide-react';
@@ -23,7 +23,7 @@ const Dashboard: React.FC = () => {
               CONNECT YOUR WALLET
             </h2>
             <p className="text-zinc-400 font-mono text-sm max-w-md">
-              Connect your MetaMask or Phantom wallet to view your NFT collection
+              Connect your wallet to view your submitted evidence
             </p>
           </div>
         </div>
@@ -37,11 +37,11 @@ const Dashboard: React.FC = () => {
       <div className="min-h-screen bg-[#050505] pt-32 pb-20 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col items-center justify-center min-h-[60vh]">
-            <div className="animate-spin text-pink-500 mb-4">
+            <div className="animate-spin text-cyan-500 mb-4">
               <RefreshCw size={48} />
             </div>
             <p className="text-zinc-400 font-mono text-sm">
-              LOADING YOUR COLLECTION...
+              LOADING YOUR SUBMISSIONS...
             </p>
           </div>
         </div>
@@ -59,14 +59,14 @@ const Dashboard: React.FC = () => {
               <AlertCircle size={32} className="text-red-500" />
             </div>
             <h2 className="text-2xl font-black text-white mb-3">
-              FAILED TO LOAD NFTS
+              FAILED TO LOAD SUBMISSIONS
             </h2>
             <p className="text-zinc-400 font-mono text-sm mb-6 max-w-md">
               {error}
             </p>
             <button
               onClick={() => refetch()}
-              className="flex items-center gap-2 bg-pink-500 hover:bg-pink-600 text-white px-6 py-3 font-bold uppercase transition-colors"
+              className="flex items-center gap-2 bg-cyan-500 hover:bg-cyan-600 text-white px-6 py-3 font-bold uppercase transition-colors"
             >
               <RefreshCw size={16} />
               TRY AGAIN
@@ -84,10 +84,10 @@ const Dashboard: React.FC = () => {
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <div className="mb-12">
-            <h1 className="text-5xl font-black italic tracking-tighter mb-4">
+            <h1 className="text-5xl font-black tracking-tighter mb-4">
               <span className="text-white">MY</span>{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-violet-500">
-                COLLECTION
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-teal-500">
+                SUBMISSIONS
               </span>
             </h1>
             <div className="flex items-center gap-3 text-sm font-mono">
@@ -95,7 +95,7 @@ const Dashboard: React.FC = () => {
               <WalletAddress 
                 address={walletAddress}
                 showCopyButton={true}
-                className="text-pink-500"
+                className="text-cyan-500"
               />
               <span className="text-zinc-700">|</span>
               <span className="text-zinc-500 uppercase">{walletType}</span>
@@ -105,27 +105,27 @@ const Dashboard: React.FC = () => {
           {/* Empty State */}
           <EmptyState
             icon="sparkles"
-            title="No NFTs yet — mint your first Voxrt asset 🚀"
-            description="Your collection is empty. Start minting NFTs to see them here!"
-            primaryAction={{ label: 'Mint NFT', to: '/mint' }}
-            secondaryAction={{ label: 'Explore NFTs', to: '/explore' }}
+            title="No submissions yet — upload your first evidence 🚀"
+            description="You haven't submitted any evidence yet. Start documenting issues!"
+            primaryAction={{ label: 'Upload Evidence', to: '/mint' }}
+            secondaryAction={{ label: 'View Public Ledger', to: '/explore' }}
           />
         </div>
       </div>
     );
   }
 
-  // NFT Grid
+  // Issue Grid
   return (
     <div className="min-h-screen bg-[#050505] pt-32 pb-20 px-6">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-12 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
           <div>
-            <h1 className="text-5xl font-black italic tracking-tighter mb-4">
+            <h1 className="text-5xl font-black tracking-tighter mb-4">
               <span className="text-white">MY</span>{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-violet-500">
-                COLLECTION
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-teal-500">
+                SUBMISSIONS
               </span>
             </h1>
             <div className="flex items-center gap-3 text-sm font-mono">
@@ -133,29 +133,29 @@ const Dashboard: React.FC = () => {
               <WalletAddress 
                 address={walletAddress}
                 showCopyButton={true}
-                className="text-pink-500"
+                className="text-cyan-500"
               />
               <span className="text-zinc-700">|</span>
               <span className="text-zinc-500 uppercase">{walletType}</span>
               <span className="text-zinc-700">|</span>
-              <span className="text-white font-bold">{nfts.length} NFT{nfts.length !== 1 ? 'S' : ''}</span>
+              <span className="text-white font-bold">{nfts.length} SUBMISSION{nfts.length !== 1 ? 'S' : ''}</span>
             </div>
           </div>
 
           {/* Refresh Button */}
           <button
             onClick={() => refetch()}
-            className="flex items-center gap-2 bg-zinc-900 hover:bg-pink-500 border border-zinc-800 hover:border-pink-500 text-white px-6 py-3 font-bold uppercase transition-all"
+            className="flex items-center gap-2 bg-zinc-900 hover:bg-cyan-500 border border-zinc-800 hover:border-cyan-500 text-white px-6 py-3 font-bold uppercase transition-all"
           >
             <RefreshCw size={16} />
             REFRESH
           </button>
         </div>
 
-        {/* NFT Grid */}
+        {/* Issue Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {nfts.map((nft) => (
-            <NFTCard key={nft.id} nft={nft} />
+            <IssueCard key={nft.id} nft={nft} />
           ))}
         </div>
       </div>

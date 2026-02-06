@@ -56,27 +56,27 @@ const AppContent: React.FC = () => {
       <footer className="relative z-10 border-t border-zinc-800 bg-[#080808] py-12 px-6 mt-20">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="space-y-4">
-            <h2 className="text-2xl font-black italic tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-violet-500">
-              VOXRT
+            <h2 className="text-2xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-teal-500">
+              CTsync
             </h2>
             <p className="text-zinc-500 font-mono text-xs leading-relaxed">
-              THE DIGITAL UNDERGROUND IS HERE. MINT YOUR CULTURE. OWN THE FUTURE. NO RULES, JUST ART.
+              PUBLIC ACCOUNTABILITY THROUGH TRANSPARENCY. DOCUMENT ISSUES. ENFORCE CHANGE. NO CENSORSHIP.
             </p>
           </div>
           <div>
-            <h3 className="text-sm font-bold uppercase tracking-widest text-zinc-400 mb-4">Marketplace</h3>
+            <h3 className="text-sm font-bold uppercase tracking-widest text-zinc-400 mb-4">Public Ledger</h3>
             <ul className="space-y-2 text-zinc-500 font-mono text-xs">
-              <li><Link to="/explore" className="hover:text-pink-500 transition-colors">ALL NFTS</Link></li>
-              <li><Link to="/explore" className="hover:text-cyan-500 transition-colors">ART</Link></li>
-              <li><Link to="/explore" className="hover:text-lime-500 transition-colors">COLLECTIBLES</Link></li>
+              <li><Link to="/explore" className="hover:text-cyan-500 transition-colors">ALL ISSUES</Link></li>
+              <li><Link to="/explore" className="hover:text-cyan-500 transition-colors">INFRASTRUCTURE</Link></li>
+              <li><Link to="/explore" className="hover:text-teal-500 transition-colors">CIVIC ISSUES</Link></li>
             </ul>
           </div>
           <div>
-            <h3 className="text-sm font-bold uppercase tracking-widest text-zinc-400 mb-4">My Account</h3>
+            <h3 className="text-sm font-bold uppercase tracking-widest text-zinc-400 mb-4">My Activity</h3>
             <ul className="space-y-2 text-zinc-500 font-mono text-xs">
-              <li><Link to="/mint" className="hover:text-violet-500 transition-colors">PROFILE</Link></li>
-              <li><Link to="/mint" className="hover:text-pink-500 transition-colors">FAVORITES</Link></li>
-              <li><Link to="/mint" className="hover:text-cyan-500 transition-colors">MY COLLECTIONS</Link></li>
+              <li><Link to="/dashboard" className="hover:text-teal-500 transition-colors">MY SUBMISSIONS</Link></li>
+              <li><Link to="/mint" className="hover:text-cyan-500 transition-colors">UPLOAD EVIDENCE</Link></li>
+              <li><Link to="/explore" className="hover:text-cyan-500 transition-colors">VIEW LEDGER</Link></li>
             </ul>
           </div>
           <div>
@@ -84,15 +84,15 @@ const AppContent: React.FC = () => {
             <div className="flex gap-2">
               <input 
                 type="text" 
-                placeholder="EMAIL@VOXRT.COM" 
-                className="bg-zinc-900 border border-zinc-800 px-4 py-2 text-xs font-mono outline-none focus:border-pink-500 flex-1"
+                placeholder="EMAIL@CTSYNC.ORG" 
+                className="bg-zinc-900 border border-zinc-800 px-4 py-2 text-xs font-mono outline-none focus:border-cyan-500 flex-1"
               />
-              <button className="bg-white text-black font-black px-4 py-2 text-xs hover:bg-pink-500 transition-colors">JOIN</button>
+              <button className="bg-white text-black font-black px-4 py-2 text-xs hover:bg-cyan-500 transition-colors">JOIN</button>
             </div>
           </div>
         </div>
         <div className="max-w-7xl mx-auto border-t border-zinc-900 mt-12 pt-8 flex justify-between items-center text-[10px] font-mono text-zinc-600">
-          <p>© 2024 VOXRT STUDIOS. ALL RIGHTS RESERVED.</p>
+          <p>© 2024 CTSYNC. ALL RIGHTS RESERVED.</p>
           <div className="flex gap-4">
             <span>PRIVACY</span>
             <span>TERMS</span>

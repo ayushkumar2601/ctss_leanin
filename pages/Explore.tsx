@@ -3,57 +3,57 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { Search, Filter, SlidersHorizontal, Sparkles, RefreshCw } from 'lucide-react';
 import { getAllNFTs } from '../lib/services/nftService';
 import type { NFTWithAttributes } from '../lib/supabase/types';
-import NFTCard from '../components/NFTCard';
+import IssueCard from '../components/NFTCard';
 import EmptyState from '../components/EmptyState';
 
 const Explore: React.FC = () => {
-  const [nfts, setNfts] = useState<NFTWithAttributes[]>([]);
+  const [issues, setIssues] = useState<NFTWithAttributes[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [sortOrder, setSortOrder] = useState<'newest' | 'oldest'>('newest');
 
-  // Fetch NFTs from Supabase
+  // Fetch issues from Supabase
   useEffect(() => {
-    fetchNFTs();
+    fetchIssues();
   }, [sortOrder]);
 
-  const fetchNFTs = async () => {
+  const fetchIssues = async () => {
     setIsLoading(true);
     setError(null);
     try {
       const data = await getAllNFTs(sortOrder);
-      setNfts(data);
+      setIssues(data);
     } catch (err: any) {
-      console.error('Error fetching NFTs:', err);
-      setError('Failed to load NFTs. Please try again.');
+      console.error('Error fetching issues:', err);
+      setError('Failed to load issues. Please try again.');
     } finally {
       setIsLoading(false);
     }
   };
 
-  // Filter NFTs based on search
-  const filteredNFTs = useMemo(() => {
-    if (!searchQuery) return nfts;
+  // Filter issues based on search
+  const filteredIssues = useMemo(() => {
+    if (!searchQuery) return issues;
 
-    return nfts.filter(nft => 
-      nft.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-      nft.description?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      nft.attributes?.some(attr => 
+    return issues.filter(issue => 
+      issue.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+      issue.description?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      issue.attributes?.some(attr => 
         attr.trait_type.toLowerCase().includes(searchQuery.toLowerCase()) ||
         attr.value.toLowerCase().includes(searchQuery.toLowerCase())
       )
     );
-  }, [nfts, searchQuery]);
+  }, [issues, searchQuery]);
 
   return (
     <div className="px-6 py-12 max-w-7xl mx-auto">
       {/* Header */}
       <div className="mb-12">
-        <h1 className="text-5xl font-black italic uppercase tracking-tighter mb-4">
-          Explore the <span className="text-pink-500">Void</span>
+        <h1 className="text-5xl font-black tracking-tighter mb-4 uppercase">
+          Public <span className="text-cyan-500">Ledger</span>
         </h1>
-        <div className="h-1 w-24 bg-gradient-to-r from-pink-500 to-transparent"></div>
+        <div className="h-1 w-24 bg-gradient-to-r from-cyan-500 to-transparent"></div>
       </div>
 
       {/* Filters Bar */}
@@ -63,8 +63,8 @@ const Explore: React.FC = () => {
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500" size={18} />
             <input 
               type="text" 
-              placeholder="SEARCH BY NAME, DESCRIPTION, ATTRIBUTES..."
-              className="w-full bg-zinc-900/50 border border-zinc-800 rounded-full py-4 pl-12 pr-6 text-xs font-mono outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500 transition-all"
+              placeholder="SEARCH BY TITLE, DESCRIPTION, LOCATION..."
+              className="w-full bg-zinc-900/50 border border-zinc-800 rounded-full py-4 pl-12 pr-6 text-xs font-mono outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
@@ -78,7 +78,7 @@ const Explore: React.FC = () => {
                   sortOrder === 'newest' ? 'bg-zinc-800 text-white' : 'text-zinc-500'
                 }`}
               >
-                NEWEST
+                LATEST
               </button>
               <button 
                 onClick={() => setSortOrder('oldest')}
@@ -91,9 +91,9 @@ const Explore: React.FC = () => {
             </div>
             
             <button
-              onClick={fetchNFTs}
+              onClick={fetchIssues}
               disabled={isLoading}
-              className="p-2 bg-zinc-900 border border-zinc-800 rounded-lg hover:border-pink-500 transition-colors disabled:opacity-50"
+              className="p-2 bg-zinc-900 border border-zinc-800 rounded-lg hover:border-cyan-500 transition-colors disabled:opacity-50"
               title="Refresh"
             >
               <RefreshCw size={18} className={isLoading ? 'animate-spin' : ''} />
@@ -105,10 +105,10 @@ const Explore: React.FC = () => {
       {/* Loading State */}
       {isLoading && (
         <div className="flex flex-col items-center justify-center py-32">
-          <div className="animate-spin text-pink-500 mb-4">
+          <div className="animate-spin text-cyan-500 mb-4">
             <RefreshCw size={48} />
           </div>
-          <p className="font-mono text-sm text-zinc-500 uppercase">Loading NFTs...</p>
+          <p className="font-mono text-sm text-zinc-500 uppercase">Loading public ledger...</p>
         </div>
       )}
 
@@ -118,7 +118,7 @@ const Explore: React.FC = () => {
           <Sparkles size={48} className="text-red-700 mb-4" />
           <p className="font-mono text-sm text-red-500 uppercase mb-4">{error}</p>
           <button
-            onClick={fetchNFTs}
+            onClick={fetchIssues}
             className="px-6 py-3 bg-red-500 text-white font-bold uppercase hover:bg-red-600 transition-colors"
           >
             TRY AGAIN
@@ -127,38 +127,38 @@ const Explore: React.FC = () => {
       )}
 
       {/* Empty State */}
-      {!isLoading && !error && filteredNFTs.length === 0 && nfts.length === 0 && (
+      {!isLoading && !error && filteredIssues.length === 0 && issues.length === 0 && (
         <EmptyState
           icon="sparkles"
-          title="No NFTs yet — mint your first Voxrt asset 🚀"
-          description="The marketplace is waiting for creators like you. Be the first to mint!"
-          primaryAction={{ label: 'Mint NFT', to: '/mint' }}
+          title="No issues reported yet — be the first to upload evidence 🚀"
+          description="The public ledger is waiting for your submission. Start documenting issues!"
+          primaryAction={{ label: 'Upload Evidence', to: '/mint' }}
           secondaryAction={{ label: 'Refresh', to: '/explore' }}
         />
       )}
 
       {/* No Search Results */}
-      {!isLoading && !error && filteredNFTs.length === 0 && nfts.length > 0 && (
+      {!isLoading && !error && filteredIssues.length === 0 && issues.length > 0 && (
         <EmptyState
           icon="search"
           title="No results found"
-          description={`No NFTs match "${searchQuery}". Try a different search term.`}
+          description={`No issues match "${searchQuery}". Try a different search term.`}
           primaryAction={{ label: 'Clear Search', to: '/explore' }}
-          secondaryAction={{ label: 'Mint NFT', to: '/mint' }}
+          secondaryAction={{ label: 'Upload Evidence', to: '/mint' }}
         />
       )}
 
       {/* Grid */}
-      {!isLoading && !error && filteredNFTs.length > 0 && (
+      {!isLoading && !error && filteredIssues.length > 0 && (
         <>
           <div className="mb-6 flex justify-between items-center">
             <p className="text-sm font-mono text-zinc-500">
-              {filteredNFTs.length} NFT{filteredNFTs.length !== 1 ? 'S' : ''} FOUND
+              {filteredIssues.length} ISSUE{filteredIssues.length !== 1 ? 'S' : ''} FOUND
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {filteredNFTs.map(nft => (
-              <NFTCard key={nft.id} nft={nft} />
+            {filteredIssues.map(issue => (
+              <IssueCard key={issue.id} nft={issue} />
             ))}
           </div>
         </>

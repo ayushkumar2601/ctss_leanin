@@ -68,21 +68,21 @@ const Navbar: React.FC = () => {
   };
 
   const navLinks = [
-    { name: 'EXPLORE', path: '/explore', icon: <LayoutGrid size={16} /> },
-    { name: 'MINT', path: '/mint', icon: <PlusCircle size={16} /> },
-    { name: 'DASHBOARD', path: '/dashboard', icon: <Wallet size={16} /> },
+    { name: 'PUBLIC LEDGER', path: '/explore', icon: <LayoutGrid size={16} /> },
+    { name: 'UPLOAD EVIDENCE', path: '/mint', icon: <PlusCircle size={16} /> },
+    { name: 'MY SUBMISSIONS', path: '/dashboard', icon: <Wallet size={16} /> },
   ];
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-[100] border-b border-white/10 bg-black/80 backdrop-blur-xl">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
-          {/* Logo with Easter Egg */}
+          {/* Logo */}
           <Link to="/" onClick={handleLogoClick} className="group relative flex items-center space-x-2 select-none">
-            <span className={`text-3xl font-black italic tracking-tighter text-white group-hover:text-pink-500 transition-colors ${logoClicks > 0 ? 'animate-pulse' : ''}`}>
-              VOX<span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-violet-500">RT</span>
+            <span className={`text-3xl font-black tracking-tight text-white group-hover:text-cyan-500 transition-colors ${logoClicks > 0 ? 'animate-pulse' : ''}`}>
+              CT<span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-teal-500">sync</span>
             </span>
-            <div className="absolute -bottom-1 left-0 w-0 h-[2px] bg-pink-500 group-hover:w-full transition-all duration-300"></div>
+            <div className="absolute -bottom-1 left-0 w-0 h-[2px] bg-cyan-500 group-hover:w-full transition-all duration-300"></div>
           </Link>
 
           {/* Desktop Nav */}
@@ -170,7 +170,7 @@ const Navbar: React.FC = () => {
                 className="flex items-center space-x-2 px-6 py-2 rounded-full border-2 border-white text-black bg-white hover:bg-transparent hover:text-white transition-all duration-300 active:scale-95"
               >
                 <Wallet size={16} />
-                <span>CONNECT WALLET</span>
+                <span>ADMIN / REWARDS</span>
               </button>
             )}
           </div>
@@ -202,7 +202,7 @@ const Navbar: React.FC = () => {
             {walletConnected ? (
               <div className="space-y-3 pt-3 border-t border-zinc-800">
                 <div className="p-3 bg-emerald-500/10 border border-emerald-500 rounded">
-                  <p className="text-[10px] font-mono text-zinc-500 uppercase mb-1">Connected</p>
+                  <p className="text-[10px] font-mono text-zinc-500 uppercase mb-1">Connected - Eligible for Rewards</p>
                   {walletAddress && (
                     <WalletAddress 
                       address={walletAddress}
@@ -232,7 +232,7 @@ const Navbar: React.FC = () => {
                 className="flex items-center space-x-2 px-6 py-4 rounded-xl bg-white text-black font-bold text-center justify-center"
               >
                 <Wallet size={18} />
-                <span>CONNECT WALLET</span>
+                <span>ADMIN / REWARDS</span>
               </button>
             )}
           </div>

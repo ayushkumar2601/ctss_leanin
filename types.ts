@@ -1,30 +1,28 @@
 
-export interface NFT {
+export interface Issue {
   id: string;
   title: string;
-  creator: string;
-  price: number;
+  source: string;
+  severity: 'Low' | 'Medium' | 'High';
   image: string;
-  rarity: 'Common' | 'Rare' | 'Legendary' | 'Artifact';
+  category: string;
+  location: string;
   tags: string[];
-  vibeTags: string[];
   trending?: boolean;
-  aiPriced?: boolean;
+  aiAnalyzed?: boolean;
   aiConfidence?: number;
-  aiDemand?: 'Low' | 'Medium' | 'High';
-  creatorScore?: number;
+  status: 'Open' | 'Under Review' | 'Resolved';
   aiExplanation?: string[];
-  authenticityStatus?: 'Verified' | 'Warning' | 'Pending';
-  matchmakingPersonas?: string[];
-  projectedPrices?: { name: string; min: number; max: number }[];
+  verificationStatus?: 'Verified' | 'Warning' | 'Pending';
+  impactScore?: number;
 }
 
 export interface ActivityEvent {
   id: string;
-  type: 'MINT' | 'SALE' | 'BID';
+  type: 'REPORTED' | 'RESOLVED' | 'UNDER_REVIEW';
   user: string;
-  nftTitle: string;
-  price?: number;
+  issueTitle: string;
+  severity?: string;
   timestamp: string;
 }
 
