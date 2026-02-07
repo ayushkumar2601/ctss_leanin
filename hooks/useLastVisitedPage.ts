@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-const LAST_PAGE_KEY = 'voxrt_last_page';
+const LAST_PAGE_KEY = 'ctsync_last_page';
 
 // Pages that should be persisted (exclude detail pages and landing)
 const PERSISTABLE_PAGES = ['/explore', '/mint', '/dashboard'];

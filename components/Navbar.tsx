@@ -46,7 +46,7 @@ const Navbar: React.FC = () => {
   const handleLogoClick = (e: React.MouseEvent) => {
     // Clear last visited page when clicking logo
     try {
-      localStorage.removeItem('voxrt_last_page');
+      localStorage.removeItem('ctsync_last_page');
     } catch (error) {
       // Silently fail
     }

@@ -18,9 +18,9 @@ interface EmptyStateProps {
 
 const EmptyState: React.FC<EmptyStateProps> = ({
   icon = 'sparkles',
-  title = 'No NFTs yet — mint your first Voxrt asset 🚀',
-  description = 'Your collection will appear here once you mint or purchase NFTs.',
-  primaryAction = { label: 'Mint NFT', to: '/mint' },
+  title = 'No evidence yet — upload your first issue 🚀',
+  description = 'Your submissions will appear here once you upload evidence.',
+  primaryAction = { label: 'Upload Evidence', to: '/mint' },
   secondaryAction = { label: 'Explore NFTs', to: '/explore' },
 }) => {
   const getIcon = () => {
