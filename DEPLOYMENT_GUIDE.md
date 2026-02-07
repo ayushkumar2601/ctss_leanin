@@ -34,24 +34,6 @@ You need Sepolia ETH for:
 
 ### Required Variables:
 
-```bash
-# 1. Gemini API (Already set ✅)
-GEMINI_API_KEY=AIzaSyDdhwiluZBPgORaf49Uao1ZDLRHjvidwK0
-
-# 2. Supabase (Already set ✅)
-VITE_SUPABASE_URL=https://kujgnfwbnyfgnowpwotc.supabase.co
-VITE_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
-
-# 3. Infura RPC (Already set ✅)
-VITE_RPC_URL=https://sepolia.infura.io/v3/e5f8c8fa45104cf49b75dc91daa00199
-
-# 4. Pinata IPFS (REQUIRED - Get these!)
-VITE_PINATA_API_KEY=your_pinata_api_key_here
-VITE_PINATA_SECRET=your_pinata_secret_here
-
-# 5. Deployer Private Key (REQUIRED for deployment)
-DEPLOYER_PRIVATE_KEY=your_private_key_here
-```
 
 ### Get Pinata Keys:
 
